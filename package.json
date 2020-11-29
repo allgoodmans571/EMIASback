@@ -1,0 +1,23 @@
+{
+  "name": "emiasback",
+  "version": "1.0.0",
+  "description": "Server for EMIAS Croc ",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allgoodmans571/EMIASbac.git"
+  },
+  "author": "nik19ta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/allgoodmans571/EMIASbac/issues"
+  },
+  "homepage": "https://github.com/allgoodmans571/EMIASbac#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
