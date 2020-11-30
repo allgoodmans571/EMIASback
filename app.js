@@ -29,10 +29,10 @@ app.get('/project_status', function (req, res) {
 })
 
 
-app.post('/total_stages', jsonParser, (req, res) => {
+app.post('/actual_stage', jsonParser, (req, res) => {
     try {        
-        console.log(req.body.total_stages);
-        db.update_obj('project_status', 'stages', req.body.total_stages)
+        console.log(req.body.actual_stage);
+        db.update_field('project_status', 'actual_stage', req.body.actual_stage)
         res.send({status: 'ok'})
     } catch (err) {
         res.send({status: 'error'})
@@ -40,10 +40,9 @@ app.post('/total_stages', jsonParser, (req, res) => {
     }
 })
 
-app.post('/actual_stage', jsonParser, (req, res) => {
+app.post('/total_stage', jsonParser, (req, res) => {
     try {
-        console.log(req.body.actual_stage);
-        db.update_obj('project_status', 'actual_stage', req.body.actual_stage)
+        db.update_field('project_status', 'stages', req.body.total_stage)
         res.send({status: 'ok'})
     } catch (err) {
         res.send({status: 'error'})
