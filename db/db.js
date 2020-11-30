@@ -38,6 +38,14 @@ function update_obj(name, key, value, key_upt, val_upt) {
         fs.writeFileSync(filename, JSON.stringify(data));
     });
 }
+function update_field(name, key, value) {
+    fs.readFile(filename, encoding, (err, data) => {
+        if (err) throw err;
+        data = JSON.parse(data);
+        data[name][key]=value;
+        fs.writeFileSync(filename, JSON.stringify(data));
+    });
+}
 
 function select_obj(name, key, value) {
     let data = fs.readFileSync(filename, encoding);
@@ -61,3 +69,4 @@ module.exports.del_obj = del_obj;
 module.exports.update_obj = update_obj;
 module.exports.select_obj = select_obj;
 module.exports.select_objs = select_objs;
+module.exports.update_field = update_field;
