@@ -4,6 +4,9 @@ const db = require('./db/db')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 
+var logger = morgan('short')
+
+app.use(bodyParser.json())
 
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -11,7 +14,9 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use(bodyParser.json())
+
+
+
 
 const jsonParser = bodyParser.json()
 
