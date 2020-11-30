@@ -40,7 +40,7 @@ app.post('/total_stages', jsonParser, (req, res) => {
 
 app.post('/actual_stage', jsonParser, (req, res) => {
     try {
-        console.log(req.body.actual_stage);
+        console.log(req.body);
         db.update_obj('project_status', 'actual_stage', req.body.actual_stage)
         res.send({status: 'ok'})
     } catch (err) {
