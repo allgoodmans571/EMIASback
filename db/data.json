@@ -1,7 +1,27 @@
-{   
+{
     "project_status": {
         "stages": 10,
-        "actual_stage": 7
+        "actual_stage": 2
     },
-    "data": []
+    "data": [{
+        "img": "../img/data/Название.png",
+        "title": "",
+        "status": "",
+        "likes": ""
+    }],
+    "people": [{
+        "id": 1,
+        "role": "Администраторы",
+        "name": "Имя Фамилия",
+        "photo": "../img/people/Имя Фамилия.png",
+        "Badges": [],
+        "medals": [],
+        "thanks": [],
+        "like": [],
+        "ideas": []
+    }],
+    "gifts": [{
+        "img": "",
+        "link": ""
+    }]
 }
