@@ -28,19 +28,11 @@ app.get('/project_status', function (req, res) {
 
 
 app.post('/total_stages', jsonParser, (req, res) => {
-    try {
-        db.update_obj('project_status', 'stages', req.body.total_stages)
-    } catch (err) {
-        console.error(err);
-    }
+    db.update_obj('project_status', 'stages', req.body.total_stages)
 })
 
 app.post('/actual_stage', jsonParser, (req, res) => {
-    try {
-        db.update_obj('project_status', 'stages', req.body.actual_stage)
-    } catch (err) {
-        console.error(err);
-    }
+    db.update_obj('project_status', 'stages', req.body.actual_stage)
 })
 
 
