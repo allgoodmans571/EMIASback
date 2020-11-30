@@ -7,6 +7,7 @@ const morgan = require('morgan')
 var logger = morgan('short')
 
 app.use(bodyParser.json())
+const jsonParser = bodyParser.json()
 
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -18,7 +19,6 @@ app.use(function (req, res, next) {
 
 
 
-const jsonParser = bodyParser.json()
 
 app.get('/project_status', function (req, res) {
     res.send({
@@ -46,7 +46,6 @@ app.post('/actual_stage', jsonParser, (req, res) => {
         console.error(err)
     }
 
-    
 })
 
 
