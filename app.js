@@ -1,15 +1,42 @@
 const express = require('express')
 const app = express()
 const db = require('./db/db')
+const bodyParser = require('body-parser')
+const morgan = require('morgan')
 
-app.use(function(req, res, next) {
+
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
 
+app.use(bodyParser.json())
+
+const jsonParser = bodyParser.json()
+
 app.get('/project_status', function (req, res) {
-  res.send({status: db.select_objs('project_status')})
+    res.send({
+        status: db.select_objs('project_status')
+    })
 })
+
+
+app.post('/total_stages', jsonParser, (req, res) => {
+    try {
+        db.update_obj('project_status', 'stages', req.body.total_stages)
+    } catch (err) {
+        console.error(err);
+    }
+})
+
+app.post('/actual_stage', jsonParser, (req, res) => {
+    try {
+        db.update_obj('project_status', 'stages', req.body.actual_stage)
+    } catch (err) {
+        console.error(err);
+    }
+})
+
 
 app.listen(3000)
