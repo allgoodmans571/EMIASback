@@ -1,7 +1,7 @@
 {
     "project_status": {
         "stages": 10,
-        "actual_stage": 2
+        "actual_stage": 3
     },
     "data": [{
         "img": "../img/data/Название.png",
@@ -10,15 +10,29 @@
         "likes": ""
     }],
     "people": [{
-        "id": 1,
-        "role": "Администраторы",
-        "name": "Имя Фамилия",
-        "photo": "../img/people/Имя Фамилия.png",
+        "role": "Администратор",
+        "name": "Никита Хватов",
+        "password": "3275",
+        "login": "nik19ta",
+        "photo": null,
         "Badges": [],
         "medals": [],
         "thanks": [],
         "like": [],
-        "ideas": []
+        "ideas": [],
+        "id": 0
+    }, {
+        "role": "Администратор",
+        "name": "Саша",
+        "password": "3275",
+        "login": "Cany",
+        "photo": null,
+        "Badges": [],
+        "medals": [],
+        "thanks": [],
+        "like": [],
+        "ideas": [],
+        "id": 1
     }],
     "gifts": [{
         "img": "",
