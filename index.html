@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="login()" >Отправить запрос (login) !</button> <br>
+    <button onclick="registration()" >Отправить запрос (registration) !</button> <br>
+</body>
+<script>
+function login() {
+    fetch('http://localhost:3000/login', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({
+            login: "nik19ta",
+            password: "3275"
+        })
+    })
+    .then(response => response.text())
+    .then((response) => { console.log(response) })
+    .catch(err => console.log(err))
+}
+function registration() {
+    fetch('http://localhost:3000/registration', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({
+            role: "Администратор",
+            login: "NikKhv",
+            name: "Никита Хватов",
+            password: "3275"
+        })
+    })
+    .then(response => response.text())
+    .then((response) => { console.log(response) })
+    .catch(err => console.log(err))
+}
+
+</script>
+</html>
