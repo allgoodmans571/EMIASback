@@ -28,6 +28,55 @@ app.get('/project_status', function (req, res) {
     })
 })
 
+app.post('/registration', jsonParser, (req, res) => {
+    try {        
+        let user = db.select_obj('people', 'login', req.body.login)
+        if (user == null) {
+            db.create_obj('people', {
+                role: req.body.role,
+                name: req.body.name,
+                password: req.body.password,
+                login: req.body.login,
+                photo: null,
+                Badges: [],
+                medals: [],
+                thanks: [],
+                like: [],
+                ideas: []
+            })
+            res.send({status: 'ok'})
+        } else {
+            res.send({status: 'not a unique login'})
+        }
+    } catch (err) {
+        res.send({status: 'error'})
+        console.error(err)
+    }
+})
+
+app.post('/login', jsonParser, (req, res) => {
+    try { 
+        let user = db.select_obj('people', 'login', req.body.login)
+        if (user.length == 1) {
+            if (user[0].password == req.body.password) {
+                res.send({
+                    status: 'ok',
+                    data: {
+                        id: user[0].id,
+                        role: user[0].role,
+                        name: user[0].name,
+                        photo: user[0].photo,
+                        login: user[0].login
+                    }
+                })
+            }
+        }
+        res.send({status: 'login error'})
+    } catch (err) {
+        res.send({status: 'error'})
+    }
+})
+
 
 app.post('/actual_stage', jsonParser, (req, res) => {
     try {        
