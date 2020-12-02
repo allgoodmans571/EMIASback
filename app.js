@@ -27,6 +27,26 @@ app.get('/project_status', function (req, res) {
         status: db.select_objs('project_status')
     })
 })
+app.get('/get_people', function (req, res) {
+    let users_from_db = db.select_objs('people');
+    let users = [];
+
+    for (let i = 0; i < users_from_db.length; i++) {
+        users.push({
+            role:users_from_db[i].role,
+            name:users_from_db[i].name,
+            login:users_from_db[i].login,
+            photo:users_from_db[i].photo,
+            Badges:users_from_db[i].Badges,
+            medals:users_from_db[i].medals,
+            thanks:users_from_db[i].thanks,
+            like:users_from_db[i].like,
+            ideas:users_from_db[i].ideas,
+            id:users_from_db[i].id
+        })
+    }
+    res.send({status: users})
+})
 
 app.post('/registration', jsonParser, (req, res) => {
     try {        
