@@ -15,7 +15,15 @@
             "password": "123",
             "login": "123",
             "photo": null,
-            "Badges": [],
+            "Badges": [{
+                    "code": 1,
+                    "count": 3
+                },
+                {
+                    "code": 2,
+                    "count": 3
+                }
+            ],
             "medals": [],
             "thanks": [],
             "like": [],
@@ -27,7 +35,15 @@
             "password": "1234",
             "login": "1234",
             "photo": null,
-            "Badges": [],
+            "Badges": [{
+                    "code": 5,
+                    "count": 6
+                },
+                {
+                    "code": 9,
+                    "count": 1
+                }
+            ],
             "medals": [],
             "thanks": [],
             "like": [],
@@ -52,7 +68,11 @@
             "password": "123456",
             "login": "123456",
             "photo": null,
-            "Badges": [],
+            "Badges": [{
+                    "code": 7,
+                    "count": 1
+                }
+            ],
             "medals": [],
             "thanks": [],
             "like": [],
