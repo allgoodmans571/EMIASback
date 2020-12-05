@@ -27,6 +27,11 @@ app.get('/project_status', function (req, res) {
         status: db.select_objs('project_status')
     })
 })
+app.get('/bulletin_project', function (req, res) {
+    res.send({
+        status: db.select_objs('data')
+    })
+})
 app.get('/get_people', function (req, res) {
     let users_from_db = db.select_objs('people');
     let users = [];
