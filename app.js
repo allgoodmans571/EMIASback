@@ -1,3 +1,4 @@
+const cookieParser = require('cookie-parser');
 const express = require('express')
 const app = express()
 const db = require('./db/db')
@@ -10,6 +11,7 @@ const jsonParser = bodyParser.json()
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -22,9 +24,14 @@ app.use(function (req, res, next) {
 
 
 
+app.get('/get_ideas', function (req, res) {
+    res.send({
+        "ideas": db.select_objs('ideas')
+    })
+})
 app.get('/project_status', function (req, res) {
     res.send({
-        status: db.select_objs('project_status')
+        "status": db.select_objs('project_status')
     })
 })
 app.get('/bulletin_project', function (req, res) {
@@ -78,8 +85,35 @@ app.post('/registration', jsonParser, (req, res) => {
         console.error(err)
     }
 })
+app.post('/shareidea', jsonParser, (req, res) => {
+    db.create_idea(req.body.text,'req.body.userId');
+    res.send({status: 'ok'})
+})
 
 app.post('/login', jsonParser, (req, res) => {
+    try { 
+        let user = db.select_obj('people', 'login', req.body.login)
+        if (user.length == 1) {
+            if (user[0].password == req.body.password) {
+                res.send({
+                    status: 'ok',
+                    data: {
+                        id: user[0].id,
+                        role: user[0].role,
+                        name: user[0].name,
+                        photo: user[0].photo,
+                        login: user[0].login
+                    }
+                })
+                res.cookie('user', 'test')
+            }
+        }
+        res.send({status: 'login error'})
+    } catch (err) {
+        res.send({status: 'error'})
+    }
+})
+app.post('/add', jsonParser, (req, res) => {
     try { 
         let user = db.select_obj('people', 'login', req.body.login)
         if (user.length == 1) {
@@ -101,8 +135,13 @@ app.post('/login', jsonParser, (req, res) => {
         res.send({status: 'error'})
     }
 })
-
-
+app.get('/CookieSet', (req, res) => {
+    res.cookie('test', 'test')
+    res.send({status: 'ok'})
+})
+app.get('/CookieGet', (req, res) => {
+    res.send({status: req.cookies['user']})
+})
 app.post('/actual_stage', jsonParser, (req, res) => {
     try {        
         console.log(req.body.actual_stage);
@@ -124,6 +163,7 @@ app.post('/total_stage', jsonParser, (req, res) => {
     }
 
 })
+
 
 
 app.listen(3000)

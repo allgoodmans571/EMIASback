@@ -14,6 +14,18 @@ function create_obj(name, obj) {
         fs.writeFileSync(filename, JSON.stringify(data));
     });
 }
+function create_idea(text, user_id) {
+    fs.readFile(filename, encoding, (err, data) => {
+        if (err) throw err;
+        data = JSON.parse(data);
+        data['ideas'].push({
+            text: text,
+            user_id: user_id,
+            id: data['ideas'].length
+        })
+        fs.writeFileSync(filename, JSON.stringify(data));
+    });
+}
 
 
 function del_obj(name, key, value) {
@@ -70,3 +82,4 @@ module.exports.update_obj = update_obj;
 module.exports.select_obj = select_obj;
 module.exports.select_objs = select_objs;
 module.exports.update_field = update_field;
+module.exports.create_idea = create_idea;

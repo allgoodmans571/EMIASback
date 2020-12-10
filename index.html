@@ -12,6 +12,9 @@
     <button onclick="project_status()" >Отправить запрос (project_status) !</button> <br>
     <button onclick="actual_stage()" >Отправить запрос (actual_stage) !</button> <br>
     <button onclick="total_stage()" >Отправить запрос (total_stage) !</button> <br>
+    <button onclick="like()" >Отправить запрос (like запись) !</button> <br>
+    <button onclick="shareidea()" >Отправить запрос (shareidea) !</button> <br>
+    <button onclick="get_ideas()" >Отправить запрос (get_ideas) !</button> <br>
 </body>
 <script>
 const url = "http://localhost:3000/";
@@ -74,6 +77,18 @@ function project_status() {
     .then((response) => { console.log(response) })
     .catch(err => console.log(err))
 }
+function get_ideas() {
+    fetch(url + 'get_ideas', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: "GET"
+    })
+    .then(response => response.text())
+    .then((response) => { console.log(response) })
+    .catch(err => console.log(err))
+}
 function actual_stage() {
     fetch(url + 'actual_stage', {
         headers: {
@@ -98,6 +113,38 @@ function total_stage() {
         method: "POST",
         body: JSON.stringify({
             total_stage: 10
+        })
+    })
+    .then(response => response.text())
+    .then((response) => { console.log(response) })
+    .catch(err => console.log(err))
+}
+function like() {
+    fetch(url + 'like', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({
+            id: 10,
+            my_id: 0
+        })
+    })
+    .then(response => response.text())
+    .then((response) => { console.log(response) })
+    .catch(err => console.log(err))
+}
+
+function shareidea() {
+    fetch(url + 'shareidea', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({
+            text: "Какой то текст"
         })
     })
     .then(response => response.text())
