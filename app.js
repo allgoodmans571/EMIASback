@@ -19,13 +19,8 @@ app.use(function (req, res, next) {
     next();
 });
 
-
-
-
-
-
 app.get('/get_ideas', function (req, res) {
-    res.send({
+    res.send({ 
         "ideas": db.select_objs('ideas')
     })
 })
