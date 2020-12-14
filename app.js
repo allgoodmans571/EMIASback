@@ -207,7 +207,7 @@ app.post('/say_thanks', jsonParser, (req, res) => {
     res.send({
         status: 'ok'
     })
-    db.push_things('people', 'login', req.body.login, 'thanks', {
+    db.push_things('people', 'name', req.body.login, 'thanks', {
         "text": req.body.text,
         "from": req.body.from,
     })

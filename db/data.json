@@ -97,7 +97,11 @@
         "photo": null,
         "Badges": [],
         "medals": [],
-        "thanks": [],
+        "thanks": [{
+            "text": "ывампит",
+            "from": "user..",
+            "id": 0
+        }],
         "like": [],
         "ideas": [],
         "id": 1
