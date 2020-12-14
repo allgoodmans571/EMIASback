@@ -50,6 +50,19 @@ function update_obj(name, key, value, key_upt, val_upt) {
         fs.writeFileSync(filename, JSON.stringify(data));
     });
 }
+function push_things(name, key, value, key_upt, val_upt) {
+    fs.readFile(filename, encoding, (err, data) => {
+        if (err) throw err;
+        data = JSON.parse(data);
+        for (let i = 0; i < data[name].length; i++) {
+            if (data[name][i][key]==value) {
+                val_upt.id = data[name][i][key_upt].length
+                data[name][i][key_upt].push(val_upt)
+            }
+        }
+        fs.writeFileSync(filename, JSON.stringify(data));
+    });
+}
 function update_field(name, key, value) {
     fs.readFile(filename, encoding, (err, data) => {
         if (err) throw err;
@@ -83,3 +96,4 @@ module.exports.select_obj = select_obj;
 module.exports.select_objs = select_objs;
 module.exports.update_field = update_field;
 module.exports.create_idea = create_idea;
+module.exports.push_things = push_things;
