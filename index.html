@@ -15,6 +15,7 @@
     <button onclick="like()" >Отправить запрос (like запись) !</button> <br>
     <button onclick="shareidea()" >Отправить запрос (shareidea) !</button> <br>
     <button onclick="get_ideas()" >Отправить запрос (get_ideas) !</button> <br>
+    <button onclick="add_data()" >Добавление статьи !</button> <br>
 </body>
 <script>
 const url = "http://localhost:3000/";
@@ -29,6 +30,25 @@ function login() {
         body: JSON.stringify({
             login: "nik19ta",
             password: "3275"
+        })
+    })
+    .then(response => response.text())
+    .then((response) => { console.log(response) })
+    .catch(err => console.log(err))
+}
+function add_data() {
+    fetch(url + 'add_data', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({
+            img: "img",
+            title:"title",
+            status: true,
+            text: "Какой то текст",
+            likes: 0
         })
     })
     .then(response => response.text())
