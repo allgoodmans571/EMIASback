@@ -24,6 +24,7 @@ app.get('/get_ideas', function (req, res) {
         "ideas": db.select_objs('ideas')
     })
 })
+
 app.get('/project_status', function (req, res) {
     res.send({
         "status": db.select_objs('project_status')
@@ -82,6 +83,16 @@ app.post('/registration', jsonParser, (req, res) => {
 })
 app.post('/shareidea', jsonParser, (req, res) => {
     db.create_idea(req.body.text,'req.body.userId');
+    res.send({status: 'ok'})
+})
+app.post('/adddata', jsonParser, (req, res) => {
+    db.create_obj('data',{
+        "img": req.body.img,
+        "title": req.body.title,
+        "status": req.body.status,
+        "text": req.body.text,
+        "likes": 0,
+    });
     res.send({status: 'ok'})
 })
 
