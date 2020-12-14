@@ -1,2 +1,12 @@
 
 node_modules/
+
+.idea/codeStyles/codeStyleConfig.xml
+
+.idea/EMIASback.iml
+
+.idea/modules.xml
+
+.idea/vcs.xml
+
+.idea/workspace.xml
