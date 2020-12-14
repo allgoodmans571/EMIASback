@@ -95,6 +95,14 @@ app.post('/adddata', jsonParser, (req, res) => {
     });
     res.send({status: 'ok'})
 })
+app.post('/deldata', jsonParser, (req, res) => {
+    try {
+        db.del_obj('data', "id", req.body.id)
+        res.send({status: 'ok'})        
+    } catch (error) {
+        res.send({status: 'err'})
+    }
+})
 
 app.post('/login', jsonParser, (req, res) => {
     try { 
