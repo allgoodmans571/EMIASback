@@ -111,6 +111,11 @@ app.post('/shareidea', jsonParser, (req, res) => {
         status: 'ok'
     })
 })
+app.post('/auto_login', jsonParser, (req, res) => {
+    res.send({
+        status: 'ok'
+    })
+})
 app.post('/adddata', jsonParser, (req, res) => {
     db.create_obj('data', {
         "img": req.body.img,
@@ -118,6 +123,16 @@ app.post('/adddata', jsonParser, (req, res) => {
         "status": req.body.status,
         "text": req.body.text,
         "likes": 0,
+    });
+    res.send({
+        status: 'ok'
+    })
+})
+app.post('/award_badge', jsonParser, (req, res) => {
+    db.award_badge({
+        from: req.body.img,
+        badge: req.body.badge,
+        to: req.body.to,
     });
     res.send({
         status: 'ok'

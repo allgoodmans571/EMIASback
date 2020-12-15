@@ -24,6 +24,35 @@ function create_obj(name, obj) {
         fs.writeFileSync(filename, JSON.stringify(data));
     });
 }
+function award_badge(obj) {
+    fs.readFile(filename, encoding, (err, data) => {
+        let isb = false;
+        if (err) throw err;
+        data = JSON.parse(data);
+        for (let i = 0; i < data['people'].length; i++) {
+            console.log('    {   ');
+            console.log(data['people'][i]['name'] == obj['to']);
+            console.log(obj['to']);
+            console.log(data['people'][i]['name']);
+            console.log('    }   ');
+            if (data['people'][i]['name'] == obj['to']) {
+                for (let j = 0; j < data['people'][i]['Badges'].length; j++) {
+                    isb = true;
+                    if (data['people'][i]['Badges'][j]['code'] == obj['badge']) {
+                        data['people'][i]['Badges'][j]['count']++
+                    }
+                }
+                if (!isb) {
+                        data['people'][i]['Badges'].push({
+                            code: obj['badge'],
+                            count: 1
+                        })
+                    }
+                }
+            }
+        fs.writeFileSync(filename, JSON.stringify(data));
+    });
+}
 function create_idea(text, user_id) {
     fs.readFile(filename, encoding, (err, data) => {
         if (err) throw err;
@@ -124,3 +153,4 @@ module.exports.create_idea = create_idea;
 module.exports.push_things = push_things;
 module.exports.create_cookie = create_cookie;
 module.exports.update_cookie = update_cookie;
+module.exports.award_badge = award_badge;
