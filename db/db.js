@@ -30,11 +30,6 @@ function award_badge(obj) {
         if (err) throw err;
         data = JSON.parse(data);
         for (let i = 0; i < data['people'].length; i++) {
-            console.log('    {   ');
-            console.log(data['people'][i]['name'] == obj['to']);
-            console.log(obj['to']);
-            console.log(data['people'][i]['name']);
-            console.log('    }   ');
             if (data['people'][i]['name'] == obj['to']) {
                 for (let j = 0; j < data['people'][i]['Badges'].length; j++) {
                     isb = true;
@@ -64,6 +59,33 @@ function create_idea(text, user_id) {
         })
         fs.writeFileSync(filename, JSON.stringify(data));
     });
+}
+function info_cookie(cookie) {
+    let user = null;
+    let data = fs.readFileSync(filename, encoding);
+    data = JSON.parse(data);
+    for (let i = 0; i < data['people'].length; i++) {
+        if (data['people'][i]['cookie'] != undefined) {
+            console.log(data['people'][i]['cookie']);
+            for (let j = 0; j < data['people'][i]['cookie'].length; j++) {
+                if (data['people'][i]['cookie'][j] == cookie) {
+                    user = {
+                        role: data['people'][i]['role'],
+                        name: data['people'][i]['name'],
+                        login: data['people'][i]['login'],
+                        photo: data['people'][i]['photo'],
+                        Badges: data['people'][i]['Badges'],
+                        medals: data['people'][i]['medals'],
+                        thanks: data['people'][i]['thanks'],
+                        like: data['people'][i]['like'],
+                        ideas: data['people'][i]['ideas'],
+                        id: data['people'][i]['id'],
+                    } 
+                    return user;
+                }
+            }
+        }
+    }
 }
 
 
@@ -154,3 +176,4 @@ module.exports.push_things = push_things;
 module.exports.create_cookie = create_cookie;
 module.exports.update_cookie = update_cookie;
 module.exports.award_badge = award_badge;
+module.exports.info_cookie = info_cookie;

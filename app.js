@@ -132,7 +132,7 @@ app.post('/adddata', jsonParser, (req, res) => {
     })
 })
 app.post('/information_about_user', jsonParser, (req, res) => {
-    res.send({status: req.cookies['user']})
+    res.send({data: db.info_cookie(req.cookies['user'])})
 
 })
 app.post('/award_badge', jsonParser, (req, res) => {
