@@ -70,7 +70,8 @@
         }],
         "like": [],
         "ideas": [],
-        "id": 0
+        "id": 0,
+        "cookie": ["iuymdrdwio"]
     }, {
         "role": "Администратор",
         "name": "Яненко Георгий",
@@ -168,6 +169,18 @@
         "like": [],
         "ideas": [],
         "id": 1
+    }, {
+        "role": null,
+        "password": "nik19ta",
+        "login": "nik19ta",
+        "photo": null,
+        "Badges": [],
+        "medals": [],
+        "thanks": [],
+        "like": [],
+        "ideas": [],
+        "cookie": ["qoqzfuazdk"],
+        "id": 8
     }],
     "gifts": [{
         "img": "",

@@ -5,6 +5,16 @@ const config = require('./config_db.json')
 const encoding = config.encoding;
 const filename = config.filename;
 
+function create_cookie() {
+    let dictionary = "abcdefghijklmnopqrstuvwxyz";
+    let word = "";
+    while (word.length < 10) {
+        word += dictionary[Math.floor(Math.random() * dictionary.length)];
+    }
+    return word;
+}
+
+
 function create_obj(name, obj) {
     fs.readFile(filename, encoding, (err, data) => {
         if (err) throw err;
@@ -46,6 +56,21 @@ function update_obj(name, key, value, key_upt, val_upt) {
         data = JSON.parse(data);
         for (let i = 0; i < data[name].length; i++) {
             if (data[name][i][key]==value) data[name][i][key_upt] = val_upt
+        }
+        fs.writeFileSync(filename, JSON.stringify(data));
+    });
+}
+function update_cookie(name, key, value, cookie) {
+    fs.readFile(filename, encoding, (err, data) => {
+        if (err) throw err;
+        data = JSON.parse(data);
+        for (let i = 0; i < data[name].length; i++) {
+            if (data[name][i][key]==value) {
+                if (data[name][i]['cookie'] == undefined)  {
+                    data[name][i]['cookie'] = []
+                }
+                data[name][i]['cookie'].push(cookie)
+            } 
         }
         fs.writeFileSync(filename, JSON.stringify(data));
     });
@@ -97,3 +122,5 @@ module.exports.select_objs = select_objs;
 module.exports.update_field = update_field;
 module.exports.create_idea = create_idea;
 module.exports.push_things = push_things;
+module.exports.create_cookie = create_cookie;
+module.exports.update_cookie = update_cookie;

@@ -63,9 +63,15 @@ app.get('/get_people', function (req, res) {
 app.post('/registration', jsonParser, (req, res) => {
     try {
         let user = db.select_obj('people', 'login', req.body.login)
+        console.log(user);
+        console.log(user == null);
         if (user == null) {
+            let cookie = db.create_cookie()
+            let cookie_array = []
+                cookie_array.push(cookie)
+
             db.create_obj('people', {
-                role: req.body.role,
+                role: null,
                 name: req.body.name,
                 password: req.body.password,
                 login: req.body.login,
@@ -74,10 +80,18 @@ app.post('/registration', jsonParser, (req, res) => {
                 medals: [],
                 thanks: [],
                 like: [],
-                ideas: []
+                ideas: [],
+                cookie: cookie_array
             })
             res.send({
-                status: 'ok'
+                status: 'ok',
+                data: {
+                    name: req.body.name,
+                    login: req.body.login,
+                    role: null,
+                    photo: null
+                },
+                cookie: cookie,
             })
         } else {
             res.send({
@@ -127,6 +141,8 @@ app.post('/login', jsonParser, (req, res) => {
         let user = db.select_obj('people', 'login', req.body.login)
         if (user.length == 1) {
             if (user[0].password == req.body.password) {
+                let cookie = db.create_cookie()
+                db.update_cookie('people', 'login', user[0].login, cookie)
                 res.send({
                     status: 'ok',
                     data: {
@@ -135,9 +151,9 @@ app.post('/login', jsonParser, (req, res) => {
                         name: user[0].name,
                         photo: user[0].photo,
                         login: user[0].login
-                    }
+                    },
+                    cookie: cookie
                 })
-                res.cookie('user', 'test')
             }
         }
         res.send({
@@ -174,17 +190,6 @@ app.post('/add', jsonParser, (req, res) => {
             status: 'error'
         })
     }
-})
-app.get('/CookieSet', (req, res) => {
-    res.cookie('test', 'test')
-    res.send({
-        status: 'ok'
-    })
-})
-app.get('/CookieGet', (req, res) => {
-    res.send({
-        status: req.cookies['user']
-    })
 })
 app.post('/actual_stage', jsonParser, (req, res) => {
     try {
