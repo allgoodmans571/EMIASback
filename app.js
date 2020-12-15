@@ -15,11 +15,14 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
 });
+
+
 
 app.get('/get_ideas', function (req, res) {
     res.send({
@@ -127,6 +130,10 @@ app.post('/adddata', jsonParser, (req, res) => {
     res.send({
         status: 'ok'
     })
+})
+app.post('/information_about_user', jsonParser, (req, res) => {
+    res.send({status: req.cookies['user']})
+
 })
 app.post('/award_badge', jsonParser, (req, res) => {
     db.award_badge({
