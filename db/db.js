@@ -48,6 +48,25 @@ function award_badge(obj) {
         fs.writeFileSync(filename, JSON.stringify(data));
     });
 }
+function chenge_img(img, coockie) {
+    fs.readFile(filename, encoding, (err, data) => {
+        if (err) throw err;
+        data = JSON.parse(data);
+        for (let i = 0; i < data['people'].length; i++) {
+            if (data['people'][i]['cookie'] != undefined) {
+                for (let j = 0; j < data['people'][i]['cookie'].length; j++) {
+                    if (data['people'][i]['cookie'][j] == coockie) {
+                        data['people'][i]['photo'] = img;
+                    }
+                }
+            }
+        }
+            
+        fs.writeFileSync(filename, JSON.stringify(data));
+
+        });
+}
+
 function create_idea(text, user_id) {
     fs.readFile(filename, encoding, (err, data) => {
         if (err) throw err;
@@ -177,3 +196,4 @@ module.exports.create_cookie = create_cookie;
 module.exports.update_cookie = update_cookie;
 module.exports.award_badge = award_badge;
 module.exports.info_cookie = info_cookie;
+module.exports.chenge_img = chenge_img;

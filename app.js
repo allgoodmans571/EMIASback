@@ -9,10 +9,6 @@ var logger = morgan('short')
 
 const jsonParser = bodyParser.json()
 
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use((req, res, next) => {
@@ -22,7 +18,8 @@ app.use((req, res, next) => {
   next();
 });
 
-
+app.use(bodyParser.json({limit: '50mb', extended: true}))
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
 
 app.get('/get_ideas', function (req, res) {
     res.send({
@@ -144,6 +141,18 @@ app.post('/award_badge', jsonParser, (req, res) => {
     res.send({
         status: 'ok'
     })
+})
+app.post('/chenge_img', jsonParser, (req, res) => {
+    try {
+        db.chenge_img(req.body.img, req.cookies['user'])
+        res.send({
+            status: 'ok'
+        })
+    } catch (error) {
+        res.send({
+            status: 'error'
+        })
+    }
 })
 app.post('/deldata', jsonParser, (req, res) => {
     try {
