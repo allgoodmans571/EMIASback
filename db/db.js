@@ -24,6 +24,7 @@ function create_obj(name, obj) {
         fs.writeFileSync(filename, JSON.stringify(data));
     });
 }
+
 function award_badge(obj) {
     fs.readFile(filename, encoding, (err, data) => {
         let isb = false;
@@ -38,16 +39,17 @@ function award_badge(obj) {
                     }
                 }
                 if (!isb) {
-                        data['people'][i]['Badges'].push({
-                            code: obj['badge'],
-                            count: 1
-                        })
-                    }
+                    data['people'][i]['Badges'].push({
+                        code: obj['badge'],
+                        count: 1
+                    })
                 }
             }
+        }
         fs.writeFileSync(filename, JSON.stringify(data));
     });
 }
+
 function chenge_img(img, coockie) {
     fs.readFile(filename, encoding, (err, data) => {
         if (err) throw err;
@@ -61,10 +63,30 @@ function chenge_img(img, coockie) {
                 }
             }
         }
-            
+
         fs.writeFileSync(filename, JSON.stringify(data));
 
-        });
+    });
+}
+
+function passch(new_pass, coockie) {
+    fs.readFile(filename, encoding, (err, data) => {
+        if (err) throw err;
+        data = JSON.parse(data);
+        for (let i = 0; i < data['people'].length; i++) {
+            if (data['people'][i]['cookie'] != undefined) {
+                for (let j = 0; j < data['people'][i]['cookie'].length; j++) {
+                    if (data['people'][i]['cookie'][j] == coockie) {
+                        data['people'][i]['password'] = new_pass;
+                        data['people'][i]['cookie'] = [];
+                        data['people'][i]['cookie'].push(coockie)
+                    }
+                }
+            }
+        }
+
+        fs.writeFileSync(filename, JSON.stringify(data));
+    });
 }
 
 function create_idea(text, user_id) {
@@ -79,6 +101,7 @@ function create_idea(text, user_id) {
         fs.writeFileSync(filename, JSON.stringify(data));
     });
 }
+
 function info_cookie(cookie) {
     let user = null;
     let data = fs.readFileSync(filename, encoding);
@@ -99,7 +122,7 @@ function info_cookie(cookie) {
                         like: data['people'][i]['like'],
                         ideas: data['people'][i]['ideas'],
                         id: data['people'][i]['id'],
-                    } 
+                    }
                     return user;
                 }
             }
@@ -113,7 +136,7 @@ function del_obj(name, key, value) {
         if (err) throw err;
         data = JSON.parse(data);
         for (let i = 0; i < data[name].length; i++) {
-            if (data[name][i][key]==value) data[name].splice(i,1);
+            if (data[name][i][key] == value) data[name].splice(i, 1);
         }
         fs.writeFileSync(filename, JSON.stringify(data));
     });
@@ -125,32 +148,34 @@ function update_obj(name, key, value, key_upt, val_upt) {
         if (err) throw err;
         data = JSON.parse(data);
         for (let i = 0; i < data[name].length; i++) {
-            if (data[name][i][key]==value) data[name][i][key_upt] = val_upt
+            if (data[name][i][key] == value) data[name][i][key_upt] = val_upt
         }
         fs.writeFileSync(filename, JSON.stringify(data));
     });
 }
+
 function update_cookie(name, key, value, cookie) {
     fs.readFile(filename, encoding, (err, data) => {
         if (err) throw err;
         data = JSON.parse(data);
         for (let i = 0; i < data[name].length; i++) {
-            if (data[name][i][key]==value) {
-                if (data[name][i]['cookie'] == undefined)  {
+            if (data[name][i][key] == value) {
+                if (data[name][i]['cookie'] == undefined) {
                     data[name][i]['cookie'] = []
                 }
                 data[name][i]['cookie'].push(cookie)
-            } 
+            }
         }
         fs.writeFileSync(filename, JSON.stringify(data));
     });
 }
+
 function push_things(name, key, value, key_upt, val_upt) {
     fs.readFile(filename, encoding, (err, data) => {
         if (err) throw err;
         data = JSON.parse(data);
         for (let i = 0; i < data[name].length; i++) {
-            if (data[name][i][key]==value) {
+            if (data[name][i][key] == value) {
                 val_upt.id = data[name][i][key_upt].length
                 data[name][i][key_upt].push(val_upt)
             }
@@ -158,11 +183,12 @@ function push_things(name, key, value, key_upt, val_upt) {
         fs.writeFileSync(filename, JSON.stringify(data));
     });
 }
+
 function update_field(name, key, value) {
     fs.readFile(filename, encoding, (err, data) => {
         if (err) throw err;
         data = JSON.parse(data);
-        data[name][key]=value;
+        data[name][key] = value;
         fs.writeFileSync(filename, JSON.stringify(data));
     });
 }
@@ -172,10 +198,11 @@ function select_obj(name, key, value) {
     data = JSON.parse(data);
     let result = [];
     for (let i = 0; i < data[name].length; i++) {
-        if (data[name][i][key]==value) result.push(data[name][i])
+        if (data[name][i][key] == value) result.push(data[name][i])
     }
     return result.length > 0 ? result : null
 }
+
 function select_objs(name) {
     let data = fs.readFileSync(filename, encoding);
     return JSON.parse(data)[name]
@@ -197,3 +224,4 @@ module.exports.update_cookie = update_cookie;
 module.exports.award_badge = award_badge;
 module.exports.info_cookie = info_cookie;
 module.exports.chenge_img = chenge_img;
+module.exports.passch = passch;

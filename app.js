@@ -154,6 +154,18 @@ app.post('/chenge_img', jsonParser, (req, res) => {
         })
     }
 })
+app.post('/passwd', jsonParser, (req, res) => {
+    try {
+        db.passch(req.body.img, req.cookies['user'])
+        res.send({
+            status: 'ok'
+        })
+    } catch (error) {
+        res.send({
+            status: 'error'
+        })
+    }
+})
 app.post('/deldata', jsonParser, (req, res) => {
     try {
         db.del_obj('data', "id", req.body.id)
