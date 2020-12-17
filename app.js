@@ -156,7 +156,7 @@ app.post('/chenge_img', jsonParser, (req, res) => {
 })
 app.post('/passwd', jsonParser, (req, res) => {
     try {
-        db.passch(req.body.img, req.cookies['user'])
+        db.passch(req.body.pass, req.cookies['user'])
         res.send({
             status: 'ok'
         })
@@ -166,6 +166,8 @@ app.post('/passwd', jsonParser, (req, res) => {
         })
     }
 })
+
+
 app.post('/deldata', jsonParser, (req, res) => {
     try {
         db.del_obj('data', "id", req.body.id)

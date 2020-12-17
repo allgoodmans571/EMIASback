@@ -77,7 +77,7 @@ function passch(new_pass, coockie) {
             if (data['people'][i]['cookie'] != undefined) {
                 for (let j = 0; j < data['people'][i]['cookie'].length; j++) {
                     if (data['people'][i]['cookie'][j] == coockie) {
-                        data['people'][i]['password'] = new_pass;
+                        data['people'][i]["password"] = new_pass;
                         data['people'][i]['cookie'] = [];
                         data['people'][i]['cookie'].push(coockie)
                     }
