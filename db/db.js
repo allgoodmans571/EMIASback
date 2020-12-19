@@ -129,6 +129,24 @@ function info_cookie(cookie) {
         }
     }
 }
+function exit(cookie) {
+    let data = fs.readFileSync(filename, encoding);
+    data = JSON.parse(data);
+    for (let i = 0; i < data['people'].length; i++) {
+        if (data['people'][i]['cookie'] != undefined) {
+            for (let j = 0; j < data['people'][i]['cookie'].length; j++) {
+                if (data['people'][i]['cookie'][j] == cookie) {
+                    let users = data['people'][i]['cookie']
+                    users.splice(j, 1)
+                    data['people'][i]['cookie'] = users;
+                    fs.writeFileSync(filename, JSON.stringify(data));
+                    return 'ok'
+                }
+            }
+        }
+    }
+    return false
+}
 
 
 function del_obj(name, key, value) {
@@ -225,3 +243,4 @@ module.exports.award_badge = award_badge;
 module.exports.info_cookie = info_cookie;
 module.exports.chenge_img = chenge_img;
 module.exports.passch = passch;
+module.exports.exit = exit;

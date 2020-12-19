@@ -129,7 +129,10 @@ app.post('/adddata', jsonParser, (req, res) => {
     })
 })
 app.post('/information_about_user', jsonParser, (req, res) => {
-    res.send({data: db.info_cookie(req.cookies['user'])})
+    res.send({data: db.info_cookie(req.body.cookie)})
+})
+app.post('/exit', jsonParser, (req, res) => {
+    res.send({data: db.exit(req.body.cookie)})
 })
 app.post('/award_badge', jsonParser, (req, res) => {
     db.award_badge({
@@ -283,4 +286,4 @@ app.post('/total_stage', jsonParser, (req, res) => {
 
 
 
-app.listen(3000)
+app.listen('3000')
