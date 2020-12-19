@@ -283,6 +283,41 @@ app.post('/total_stage', jsonParser, (req, res) => {
     }
 
 })
+app.post('/edit_data', jsonParser, (req, res) => {
+    try {
+        let step = 0;
+        console.log(req.body.id);
+        console.log(req.body.id != undefined && req.body.id != false);
+        if (req.body.id != undefined && req.body.id != false) {
+            
+            if (req.body.img != undefined && req.body.img != false) {
+                db.update_obj("data","id", req.body.id, "img", req.body.img)
+                step++
+            }
+            if (req.body.title != undefined && req.body.title != false) {
+                db.update_obj("data","id", req.body.id, "title", req.body.title)
+                step++
+            }
+            if (req.body.text != undefined && req.body.text != false) {
+                db.update_obj("data","id", req.body.id, "text", req.body.text)
+                step++
+            }
+            if (req.body.status != undefined) {
+                db.update_obj("data","id", req.body.id, "status", req.body.status)
+                step++
+            }
+            res.send({status: 'ok', text: `обновленно полей ${step}`})
+        } else {
+            res.send({status: 'id is undefined'})
+        }
+    } catch (err) {
+        res.send({
+            status: 'error'
+        })
+        console.error(err)
+    }
+
+})
 
 
 
