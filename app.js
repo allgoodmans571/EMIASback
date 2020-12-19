@@ -146,7 +146,7 @@ app.post('/award_badge', jsonParser, (req, res) => {
 })
 app.post('/chenge_img', jsonParser, (req, res) => {
     try {
-        db.chenge_img(req.body.img, req.cookies['user'])
+        db.chenge_img(req.body.img, req.body.cookie)
         res.send({
             status: 'ok'
         })
@@ -158,7 +158,7 @@ app.post('/chenge_img', jsonParser, (req, res) => {
 })
 app.post('/passwd', jsonParser, (req, res) => {
     try {
-        db.passch(req.body.pass, req.cookies['user'])
+        db.passch(req.body.pass, req.body.cookie)
         res.send({
             status: 'ok'
         })
