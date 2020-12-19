@@ -17,8 +17,9 @@
     <button onclick="get_ideas()" >Отправить запрос (get_ideas) !</button> <br>
     <button onclick="add_data()" >Добавление статьи !</button> <br>
     <button onclick="bulletin_project()" >Получить статьи !</button> <br>
-    <button onclick="say_thanks()" >Сказать спасибо !</button> <br>
     <button onclick="edit_data()" >Редактировать статью !</button> <br>
+    <button onclick="del_data()" >удалить статью !</button> <br>
+    <button onclick="say_thanks()" >Сказать спасибо !</button> <br>
 </body>
 <script>
 const url = "http://localhost:3000/";
@@ -58,6 +59,21 @@ function add_data() {
     .then((response) => { console.log(response) })
     .catch(err => console.log(err))
 }
+function del_data() {
+    fetch(url + 'deldata', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({
+            id: "2",
+        })
+    })
+    .then(response => response.text())
+    .then((response) => { console.log(response) })
+    .catch(err => console.log(err))
+}
 function edit_data() {
     fetch(url + 'edit_data', {
         headers: {
@@ -68,7 +84,6 @@ function edit_data() {
         body: JSON.stringify({
             img: "img",
             title:"title",
-            status: true,
             text: "Какой то текст",
             id: 4
         })
