@@ -157,6 +157,8 @@ app.post('/award_badge', jsonParser, (req, res) => {
         badge: req.body.badge,
         to: req.body.to,
     });
+    console.log(user.name);
+    db.up_points(20, user.name)
     res.send({
         status: 'ok'
     })

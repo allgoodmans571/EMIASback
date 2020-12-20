@@ -121,6 +121,7 @@ function info_cookie(cookie) {
                         login: data['people'][i]['login'],
                         photo: data['people'][i]['photo'],
                         Badges: data['people'][i]['Badges'],
+                        points: data['people'][i]['points'],
                         medals: data['people'][i]['medals'],
                         thanks: data['people'][i]['thanks'],
                         like: data['people'][i]['like'],
@@ -171,6 +172,17 @@ function update_obj(name, key, value, key_upt, val_upt) {
         data = JSON.parse(data);
         for (let i = 0; i < data[name].length; i++) {
             if (data[name][i][key] == value) data[name][i][key_upt] = val_upt
+        }
+        fs.writeFileSync(filename, JSON.stringify(data));
+    });
+}
+
+function up_points(count, user_name) {
+    fs.readFile(filename, encoding, (err, data) => {
+        if (err) throw err;
+        data = JSON.parse(data);
+        for (let i = 0; i < data['people'].length; i++) {
+            if (data['people'][i]['name'] == user_name) data['people'][i]['points'] = data['people'][i]['points'] + count
         }
         fs.writeFileSync(filename, JSON.stringify(data));
     });
@@ -248,3 +260,4 @@ module.exports.info_cookie = info_cookie;
 module.exports.chenge_img = chenge_img;
 module.exports.passch = passch;
 module.exports.exit = exit;
+module.exports.up_points = up_points;
