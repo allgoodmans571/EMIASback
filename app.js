@@ -12,14 +12,20 @@ const jsonParser = bodyParser.json()
 app.use(cookieParser());
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', req.headers.origin);
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
+    res.header('Access-Control-Allow-Origin', req.headers.origin);
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
 });
 
-app.use(bodyParser.json({limit: '50mb', extended: true}))
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
+app.use(bodyParser.json({
+    limit: '50mb',
+    extended: true
+}))
+app.use(bodyParser.urlencoded({
+    limit: '50mb',
+    extended: true
+}))
 
 app.get('/get_ideas', function (req, res) {
     res.send({
@@ -68,7 +74,7 @@ app.post('/registration', jsonParser, (req, res) => {
         if (user == null) {
             let cookie = db.create_cookie()
             let cookie_array = []
-                cookie_array.push(cookie)
+            cookie_array.push(cookie)
 
             db.create_obj('people', {
                 role: null,
@@ -129,14 +135,25 @@ app.post('/adddata', jsonParser, (req, res) => {
     })
 })
 app.post('/information_about_user', jsonParser, (req, res) => {
-    res.send({data: db.info_cookie(req.body.cookie)})
+    res.send({
+        data: db.info_cookie(req.body.cookie)
+    })
 })
 app.post('/exit', jsonParser, (req, res) => {
-    res.send({data: db.exit(req.body.cookie)})
+    res.send({
+        data: db.exit(req.body.cookie)
+    })
 })
 app.post('/award_badge', jsonParser, (req, res) => {
+    let user = db.info_cookie(req.body.from)
+    console.log(user);
     db.award_badge({
-        from: req.body.img,
+        from: user.name,
+        badge: req.body.badge,
+        to: req.body.to,
+    });
+    console.log({
+        from: user.name,
         badge: req.body.badge,
         to: req.body.to,
     });
@@ -252,6 +269,139 @@ app.post('/actual_stage', jsonParser, (req, res) => {
         console.error(err)
     }
 })
+app.post('/can_give_badge', jsonParser, (req, res) => {
+    let useryou = db.info_cookie(req.body.cookie)
+    let user = db.select_obj('people', 'name', req.body.to)
+    if (useryou == undefined) {
+        res.send({
+            status: 'you not a login'
+        })
+    } else if (useryou.name == user[0].name) {
+        res.send({
+            status: "you can't give a badge to yourself"
+        })
+    } else {
+        let descs = {
+            'за результативность': 1,
+            'за результативность': 2,
+            'за самостоятельность': 3,
+            'за внимательность': 4,
+            'за организацию процесса': 5,
+            'за ответственность': 6,
+            'за отзывчивость': 7,
+            'за опретивность': 8,
+            'за вовлеченность': 9,
+            'за мобильность': 10,
+            'за командный дух': 11,
+            'За красивые глазки': 12,
+        };
+
+
+        let users = [{
+                nameto: 'Координатор',
+                namefrom: 'Менеджер',
+                badge: ['за результативность',
+                    'за ответственность',
+                    'за командный дух',
+                    'За красивые глазки'
+                ],
+                count: 3,
+                score: 20
+            },
+            {
+                nameto: 'Тимлид',
+                namefrom: 'Координатор',
+                badge: ['за результативность',
+                    'за ответственность',
+                    'за командный дух',
+                    'За красивые глазки'
+                ],
+                count: 3,
+                score: 20
+            },
+            {
+                nameto: 'Тимлид',
+                namefrom: 'Аналитик',
+                badge: ['за результативность',
+                    'за ответственность',
+                    'за командный дух',
+                    'За красивые глазки'
+                ],
+                count: 3,
+                score: 20
+            },
+            {
+                nameto: 'Технический специалист',
+                namefrom: 'Аналитик',
+                badge: ['за результативность',
+                    'за самостоятельность',
+                    'за мобильность',
+                    'За красивые глазки'
+                ],
+                count: 3,
+                score: 20
+            },
+            {
+                nameto: 'Консультант',
+                namefrom: 'Тимлид',
+                badge: ['за вовлеченность',
+                    'за ответственность',
+                    'за отзывчивость',
+                    'За красивые глазки'
+                ],
+                count: 3,
+                score: 20
+            },
+            {
+                nameto: 'Аналитик',
+                namefrom: 'Технический специалист',
+                badge: ['за оперативность',
+                    'за командный дух',
+                    'за вовлеченность',
+                    'За красивые глазки'
+                ],
+                count: 1,
+                score: 20
+            },
+            {
+                nameto: 'Администратор',
+                namefrom: 'Менеджер',
+                badge: ['за внимательность',
+                    'за командный дух',
+                    'за организацию процесса',
+                    'За красивые глазки'
+                ],
+                count: 3,
+                score: 20
+            },
+        ]
+
+        console.log('ты: ' + useryou.role);
+        console.log('тот кому даришь: ' + user[0].role);
+        let bages_names = [];
+        for (let i = 0; i < users.length; i++) {
+            if (useryou.role == users[i].nameto && users[i].namefrom == user[0].role) {
+                console.log(users[i]);
+                bages_names = bages_names.concat(users[i].badge)
+            }
+        }
+        if (bages_names.length > 0) {
+            let bages_count = [];
+            for (let i = 0; i < bages_names.length; i++) {
+                bages_count.push(descs[bages_names[i]])
+            }
+            res.send({
+                status: 'ok',
+                data: bages_names,
+                bages_count: bages_count,
+            })
+        } else {
+            res.send({
+                status: 'countnull'
+            })
+        }
+    }
+})
 app.post('/say_thanks', jsonParser, (req, res) => {
 
 
@@ -289,26 +439,31 @@ app.post('/edit_data', jsonParser, (req, res) => {
         console.log(req.body.id);
         console.log(req.body.id != undefined && req.body.id != false);
         if (req.body.id != undefined && req.body.id != false) {
-            
+
             if (req.body.img != undefined && req.body.img != false) {
-                db.update_obj("data","id", req.body.id, "img", req.body.img)
+                db.update_obj("data", "id", req.body.id, "img", req.body.img)
                 step++
             }
             if (req.body.title != undefined && req.body.title != false) {
-                db.update_obj("data","id", req.body.id, "title", req.body.title)
+                db.update_obj("data", "id", req.body.id, "title", req.body.title)
                 step++
             }
             if (req.body.text != undefined && req.body.text != false) {
-                db.update_obj("data","id", req.body.id, "text", req.body.text)
+                db.update_obj("data", "id", req.body.id, "text", req.body.text)
                 step++
             }
             if (req.body.status != undefined) {
-                db.update_obj("data","id", req.body.id, "status", req.body.status)
+                db.update_obj("data", "id", req.body.id, "status", req.body.status)
                 step++
             }
-            res.send({status: 'ok', text: `обновленно полей ${step}`})
+            res.send({
+                status: 'ok',
+                text: `обновленно полей ${step}`
+            })
         } else {
-            res.send({status: 'id is undefined'})
+            res.send({
+                status: 'id is undefined'
+            })
         }
     } catch (err) {
         res.send({

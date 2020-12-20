@@ -36,12 +36,16 @@ function award_badge(obj) {
                     isb = true;
                     if (data['people'][i]['Badges'][j]['code'] == obj['badge']) {
                         data['people'][i]['Badges'][j]['count']++
+                        data['people'][i]['Badges'][j]['users'].push(obj['from'])
                     }
                 }
                 if (!isb) {
+                    let bg = []
+                        bg.push(obj['from'])
                     data['people'][i]['Badges'].push({
                         code: obj['badge'],
-                        count: 1
+                        count: 1,
+                        users: bg
                     })
                 }
             }
