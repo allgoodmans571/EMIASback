@@ -20,6 +20,7 @@
     <button onclick="edit_data()" >Редактировать статью !</button> <br>
     <button onclick="del_data()" >удалить статью !</button> <br>
     <button onclick="say_thanks()" >Сказать спасибо !</button> <br>
+    <button onclick="next_stage()" >next stage !</button> <br>
 </body>
 <script>
 const url = "http://localhost:3000/";
@@ -35,6 +36,18 @@ function login() {
             login: "nik19ta",
             password: "3275"
         })
+    })
+    .then(response => response.text())
+    .then((response) => { console.log(response) })
+    .catch(err => console.log(err))
+}
+function next_stage() {
+    fetch(url + 'next_stage', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
     })
     .then(response => response.text())
     .then((response) => { console.log(response) })

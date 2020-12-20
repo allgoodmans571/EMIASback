@@ -2,6 +2,7 @@ const cookieParser = require('cookie-parser');
 const express = require('express')
 const app = express()
 const db = require('./db/db')
+const zeroing = require('./zeroing')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 
@@ -143,6 +144,18 @@ app.post('/exit', jsonParser, (req, res) => {
     res.send({
         data: db.exit(req.body.cookie)
     })
+})
+app.post('/next_stage', jsonParser, (req, res) => {
+    try {
+        zeroing.zeroing()
+        res.send({
+            data: 'ok'
+        })
+    } catch (error) {
+        res.send({
+            data: 'error'
+        })
+    }
 })
 app.post('/award_badge', jsonParser, (req, res) => {
     let user = db.info_cookie(req.body.from)
